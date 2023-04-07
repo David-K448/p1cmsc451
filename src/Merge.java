@@ -15,14 +15,20 @@ class Merge {
 
     public static void startSort() {
         System.out.println("merge called");
+        // warms up the sorting method, I saw an enourmous drop in variance after doing
+        // this
+        int[] warmUpData = new int[] { 10, 9, 8, 7, 6, 5, 4, 3, 2 };
+        for (int k = 0; k < 10; k++) {
+            mergeSort(warmUpData);
+        }
+        warmup();
 
         long[][] critCount = new long[12][40]; // count of each of the 40 runs
         long[][] elapsedTime = new long[12][40]; // elapsed time of each of the 40 runs
         int[] countArrAvg = new int[12]; // avg count for each of 12 groups
         long[] timeAvg = new long[12];
-        
 
-        // calling merge sort
+        // calling merge sort / performance run
         for (int i = 0; i < 12; i++) {
             int countPass = 0;
             int countTime = 0;
@@ -30,10 +36,8 @@ class Merge {
                 int[] arr = dataSet[i][j];
 
                 long startTime = System.nanoTime(); // start time
-                int tempCount = mergeSort(arr); // call sort
-                
-
-                long tempTimeCalc = endSort(startTime, endTime); // get temp elapsed time 
+                int tempCount = mergeSort(arr); // call sort // performance call
+                long tempTimeCalc = endSort(startTime, endTime); // get temp elapsed time
 
                 countPass += tempCount;
                 critCount[i][j] = tempCount;
@@ -57,7 +61,7 @@ class Merge {
         try {
             FileWriter fw = new FileWriter("p1output/mergeResults.txt");
             BufferedWriter bw = new BufferedWriter(fw);
-    
+
             for (int i = 0; i < 12; i++) {
                 StringBuilder str = new StringBuilder();
                 Integer x = dataSet[i][0].length;
@@ -69,9 +73,9 @@ class Merge {
                     str.append(t + " ");
                 }
                 bw.write(str.toString() + "\n");
-                System.out.println(str.toString());
+                // System.out.println(str.toString());
             }
-    
+
             bw.close();
             fw.close();
         } catch (IOException e) {
@@ -79,7 +83,6 @@ class Merge {
             e.printStackTrace();
         }
     }
-    
 
     private static long endSort(long startTime, long endTime) {
         return (endTime - startTime);
@@ -138,7 +141,7 @@ class Merge {
                 testData[i][j] = random.nextInt(10000);
             }
         }
-    
+
         long startTime = System.nanoTime();
         for (int i = 0; i < 100; i++) {
             for (int j = 0; j < 10; j++) {
@@ -148,7 +151,5 @@ class Merge {
         long endTime = System.nanoTime();
         System.out.println("Warmup complete in " + (endTime - startTime) / 1000000 + " ms");
     }
-    
-    
-    
+
 }

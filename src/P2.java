@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.Scanner;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
@@ -25,35 +26,75 @@ public class P2 {
         int[][] counts = new int[12][40];
         int[][] times = new int[12][40];
 
-        try {
-            // Open file for reading
-            File file = new File("p1output/mergeResults.txt");
-            Scanner scanner = new Scanner(file);
-            // Loop through each line of the file
-            int lineNum = 0;
-            while (scanner.hasNextLine()) {
-                // Get next line and split into tokens
-                String line = scanner.nextLine();
-                String[] tokens = line.split(" ");
-                // Add first token to sizes ArrayList
-                int size = Integer.parseInt(tokens[0]);
-                sizes.add(size);
-                // Read even integers into counts array
-                for (int i = 1; i < tokens.length; i += 2) {
-                    int index = (i - 1) / 2;
-                    counts[lineNum][index] = Integer.parseInt(tokens[i]);
+        // try {
+        // // Open file for reading
+        // File file = new File("p1output/mergeResults.txt");
+        // Scanner scanner = new Scanner(file);
+        // // Loop through each line of the file
+        // int lineNum = 0;
+        // while (scanner.hasNextLine()) {
+        // // Get next line and split into tokens
+        // String line = scanner.nextLine();
+        // String[] tokens = line.split(" ");
+        // // Add first token to sizes ArrayList
+        // int size = Integer.parseInt(tokens[0]);
+        // sizes.add(size);
+        // // Read even integers into counts array
+        // for (int i = 1; i < tokens.length; i += 2) {
+        // int index = (i - 1) / 2;
+        // counts[lineNum][index] = Integer.parseInt(tokens[i]);
+        // }
+        // // Read odd integers into times array
+        // for (int i = 2; i < tokens.length; i += 2) {
+        // int index = (i - 2) / 2;
+        // times[lineNum][index] = Integer.parseInt(tokens[i]);
+        // }
+        // // Increment line number
+        // lineNum++;
+        // }
+        // scanner.close();
+        // } catch (FileNotFoundException e) {
+        // e.printStackTrace();
+        // }
+        
+
+        JFileChooser fileChooser = new JFileChooser(new File("p1output"));
+        fileChooser.setDialogTitle("Choose input file");
+
+        int userSelection = fileChooser.showOpenDialog(null);
+
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File inputFile = fileChooser.getSelectedFile();
+
+            try {
+                // Open file for reading
+                Scanner scanner = new Scanner(inputFile);
+                // Loop through each line of the file
+                int lineNum = 0;
+                while (scanner.hasNextLine()) {
+                    // Get next line and split into tokens
+                    String line = scanner.nextLine();
+                    String[] tokens = line.split(" ");
+                    // Add first token to sizes ArrayList
+                    int size = Integer.parseInt(tokens[0]);
+                    sizes.add(size);
+                    // Read even integers into counts array
+                    for (int i = 1; i < tokens.length; i += 2) {
+                        int index = (i - 1) / 2;
+                        counts[lineNum][index] = Integer.parseInt(tokens[i]);
+                    }
+                    // Read odd integers into times array
+                    for (int i = 2; i < tokens.length; i += 2) {
+                        int index = (i - 2) / 2;
+                        times[lineNum][index] = Integer.parseInt(tokens[i]);
+                    }
+                    // Increment line number
+                    lineNum++;
                 }
-                // Read odd integers into times array
-                for (int i = 2; i < tokens.length; i += 2) {
-                    int index = (i - 2) / 2;
-                    times[lineNum][index] = Integer.parseInt(tokens[i]);
-                }
-                // Increment line number
-                lineNum++;
+                scanner.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
             }
-            scanner.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         }
 
         /*
@@ -135,43 +176,31 @@ public class P2 {
         // Create the JOptionPane and display it
         JOptionPane.showMessageDialog(null, panel, "Merge Results", JOptionPane.PLAIN_MESSAGE);
 
-       
-
     }
 
-    // takes an avg array & counts, calculates diff coef
+    // calculates the sample variance
     private static double[] calcDiffCoef(int[] avgCounts, int[][] counts) {
-        double[] diffCoef = new double[12];
-        // max - min / avg
-
-        int[] maxValues = new int[12];
-        int[] minValues = new int[12];
-        for (int i = 0; i < 12; i++) {
-            int max = counts[i][0];
-            int min = counts[i][0];
-            for (int j = 1; j < 40; j++) {
-                if (counts[i][j] > max) {
-                    max = counts[i][j];
-                }
-                if (counts[i][j] < min) {
-                    min = counts[i][j];
-                }
+        int n = avgCounts.length;
+        double[] diffCoef = new double[n];
+    
+        for (int i = 0; i < n; i++) {
+            int sum = 0;
+            for (int j = 0; j < counts[i].length; j++) {
+                sum += counts[i][j];
             }
-            maxValues[i] = max;
-            minValues[i] = min;
+            double variance = 0;
+            for (int j = 0; j < counts[i].length; j++) {
+                double diff = counts[i][j] - avgCounts[i];
+                variance += diff * diff;
+            }
+            variance /= counts[i].length - 1;
+            double stddev = Math.sqrt(variance);
+            diffCoef[i] = stddev / avgCounts[i] * 100;
         }
-
-        // calculate coef
-        for (int i = 0; i < 12; i++) {
-            int tempMin = minValues[i];
-            int tempMax = maxValues[i];
-            int tempAvg = avgCounts[i];
-
-            double tempCoef = (double) (tempMax - tempMin) / tempAvg * 100;
-            diffCoef[i] = tempCoef;
-        }
+    
         return diffCoef;
     }
+    
 
     public static void writeCsv(ArrayList<Integer> sizes, int[] avgCounts, int[] avgTimes, double[] countCoef,
             double[] timeCoef, String filename) throws IOException {
