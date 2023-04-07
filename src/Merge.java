@@ -16,8 +16,6 @@ class Merge {
     public static void startSort() {
         System.out.println("merge called");
 
-        warmup();
-
         long[][] critCount = new long[12][40]; // count of each of the 40 runs
         long[][] elapsedTime = new long[12][40]; // elapsed time of each of the 40 runs
         int[] countArrAvg = new int[12]; // avg count for each of 12 groups
@@ -134,10 +132,10 @@ class Merge {
 
     public static void warmup() {
         Random random = new Random();
-        int[][] testData = new int[10][1000];
+        int[][] testData = new int[10][10000];
         for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 1000; j++) {
-                testData[i][j] = random.nextInt(1000);
+            for (int j = 0; j < 10000; j++) {
+                testData[i][j] = random.nextInt(10000);
             }
         }
     

@@ -1,5 +1,8 @@
+import java.util.Random;
+
 class Selection {
     private int[][][] dataSet;
+    private static long endTime = 0; 
 
     public Selection(int[][][] dataSet) {
         this.dataSet = dataSet;
@@ -8,6 +11,12 @@ class Selection {
 
     private void prin() {
         System.out.println("select called");
+    }
+
+    public static void startSort() {
+        System.out.println("selection called");
+
+
     }
 
     /*
@@ -29,5 +38,24 @@ class Selection {
             array[i] = temp;
         }
         return passes;
+    }
+
+    public static void warmup() {
+        Random random = new Random();
+        int[][] testData = new int[10][10000];
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10000; j++) {
+                testData[i][j] = random.nextInt(10000);
+            }
+        }
+    
+        long startTime = System.nanoTime();
+        for (int i = 0; i < 100; i++) {
+            for (int j = 0; j < 10; j++) {
+                Merge.mergeSort(testData[j]);
+            }
+        }
+        long endTime = System.nanoTime();
+        System.out.println("Warmup complete in " + (endTime - startTime) / 1000000 + " ms");
     }
 }

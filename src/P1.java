@@ -13,9 +13,11 @@ public class P1 {
         fillDataStructure(dataSet); // create data structure for use in both sorting algos
 
         Merge merge = new Merge(dataSet); // call merge class
+        merge.warmup();
         merge.startSort();
         Selection selection = new Selection(dataSet); // call selection class 
-        
+        merge.warmup();
+        selection.startSort();
       
     }
 

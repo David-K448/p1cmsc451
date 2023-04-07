@@ -6,12 +6,10 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
-
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 import java.io.FileWriter;
@@ -104,6 +102,8 @@ public class P2 {
         cells[0][2] = "Count Coef";
         cells[0][3] = "Avg Times";
         cells[0][4] = "Time Coef";
+
+        // fill out cells
 
         for (int i = 1; i < 13; i++) {
             cells[i][0] = String.valueOf(sizes.get(i - 1));
