@@ -93,15 +93,8 @@ public class P2 {
         // calc time diff coef
         double[] timeCoef = calcDiffCoef(avgTimes, times);
 
+        // display output, gives option for user to download csv
         displayTable(sizes, avgCounts, countCoef, avgTimes, timeCoef, filename);
-
-        try {
-            writeCsv(sizes, avgCounts, avgTimes, countCoef, timeCoef, filename);
-
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
     }
 
     /*
