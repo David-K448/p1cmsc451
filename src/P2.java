@@ -26,37 +26,6 @@ public class P2 {
         int[][] counts = new int[12][40];
         int[][] times = new int[12][40];
 
-        // try {
-        // // Open file for reading
-        // File file = new File("p1output/mergeResults.txt");
-        // Scanner scanner = new Scanner(file);
-        // // Loop through each line of the file
-        // int lineNum = 0;
-        // while (scanner.hasNextLine()) {
-        // // Get next line and split into tokens
-        // String line = scanner.nextLine();
-        // String[] tokens = line.split(" ");
-        // // Add first token to sizes ArrayList
-        // int size = Integer.parseInt(tokens[0]);
-        // sizes.add(size);
-        // // Read even integers into counts array
-        // for (int i = 1; i < tokens.length; i += 2) {
-        // int index = (i - 1) / 2;
-        // counts[lineNum][index] = Integer.parseInt(tokens[i]);
-        // }
-        // // Read odd integers into times array
-        // for (int i = 2; i < tokens.length; i += 2) {
-        // int index = (i - 2) / 2;
-        // times[lineNum][index] = Integer.parseInt(tokens[i]);
-        // }
-        // // Increment line number
-        // lineNum++;
-        // }
-        // scanner.close();
-        // } catch (FileNotFoundException e) {
-        // e.printStackTrace();
-        // }
-
         JFileChooser fileChooser = new JFileChooser(new File("p1output"));
         fileChooser.setDialogTitle("Choose input file");
 
@@ -64,7 +33,6 @@ public class P2 {
 
         String path = fileChooser.getSelectedFile().getAbsolutePath();
         String filename = fileChooser.getSelectedFile().getName();
-        
 
         if (userSelection == JFileChooser.APPROVE_OPTION) {
             File inputFile = fileChooser.getSelectedFile();
@@ -136,6 +104,10 @@ public class P2 {
         }
     }
 
+    /*
+     * displays output for selected file by user
+     */
+
     public static void displayTable(ArrayList<Integer> sizes, int[] avgCounts, double[] countCoef, int[] avgTimes,
             double[] timeCoef, String filename) {
 
@@ -195,7 +167,9 @@ public class P2 {
 
     }
 
-    // calculates the sample variance
+    /*
+     * calculates the sample coefficient of variance
+     */
     private static double[] calcDiffCoef(int[] avgCounts, int[][] counts) {
         int n = avgCounts.length;
         double[] diffCoef = new double[n];
@@ -218,7 +192,12 @@ public class P2 {
         return diffCoef;
     }
 
-    public static void writeCsv(ArrayList<Integer> sizes, int[] avgCounts, int[] avgTimes, double[] countCoef, double[] timeCoef, String filename) throws IOException {
+    /*
+     * gives the user the option to download the data in a .CSV file
+     */
+
+    public static void writeCsv(ArrayList<Integer> sizes, int[] avgCounts, int[] avgTimes, double[] countCoef,
+            double[] timeCoef, String filename) throws IOException {
         System.out.println(filename);
         String name = "";
         switch (filename) {

@@ -5,7 +5,7 @@ import java.util.Random;
 
 class Selection {
     private static int[][][] dataSet;
-    private static long endTime = 0; 
+    private static long endTime = 0;
 
     public Selection(int[][][] dataSet) {
         this.dataSet = dataSet;
@@ -85,7 +85,7 @@ class Selection {
      * implementation of selection sort, returns int count passes
      */
 
-     public static int selectionSort(int[] array) {
+    public static int selectionSort(int[] array) {
         int passes = 0;
         for (int i = 0; i < array.length - 1; i++) {
             int minIndex = i;
@@ -111,14 +111,14 @@ class Selection {
                 testData[i][j] = random.nextInt(10000);
             }
         }
-    
-        long startTime = System.nanoTime();
+
+        long teststartTime = System.nanoTime();
         for (int i = 0; i < 100; i++) {
             for (int j = 0; j < 10; j++) {
                 Selection.selectionSort(testData[j]);
             }
         }
-        long endTime = System.nanoTime();
-        System.out.println("Warmup complete in " + (endTime - startTime) / 1000000 + " ms");
+        long testendTime = System.nanoTime();
+        System.out.println("Warmup complete in " + (testendTime - teststartTime) / 1000000 + " ms");
     }
 }
