@@ -56,12 +56,15 @@ public class P2 {
         // } catch (FileNotFoundException e) {
         // e.printStackTrace();
         // }
-        
 
         JFileChooser fileChooser = new JFileChooser(new File("p1output"));
         fileChooser.setDialogTitle("Choose input file");
 
         int userSelection = fileChooser.showOpenDialog(null);
+
+        String path = fileChooser.getSelectedFile().getAbsolutePath();
+        String filename = fileChooser.getSelectedFile().getName();
+        
 
         if (userSelection == JFileChooser.APPROVE_OPTION) {
             File inputFile = fileChooser.getSelectedFile();
@@ -122,10 +125,10 @@ public class P2 {
         // calc time diff coef
         double[] timeCoef = calcDiffCoef(avgTimes, times);
 
-        displayTable(sizes, avgCounts, countCoef, avgTimes, timeCoef);
+        displayTable(sizes, avgCounts, countCoef, avgTimes, timeCoef, filename);
 
         try {
-            writeCsv(sizes, avgCounts, avgTimes, countCoef, timeCoef, null);
+            writeCsv(sizes, avgCounts, avgTimes, countCoef, timeCoef, filename);
 
         } catch (IOException e) {
             // TODO Auto-generated catch block
@@ -134,7 +137,21 @@ public class P2 {
     }
 
     public static void displayTable(ArrayList<Integer> sizes, int[] avgCounts, double[] countCoef, int[] avgTimes,
-            double[] timeCoef) {
+            double[] timeCoef, String filename) {
+
+        String title = "";
+        switch (filename) {
+            case "mergeResults.txt":
+                title = "Merge Sort Results";
+                break;
+            case "selectionResults.txt":
+                title = "Selection Sort Results";
+                break;
+            default:
+                title = "";
+                break;
+        }
+
         // Create a 2D array to represent the grid of cells
         String[][] cells = new String[13][5];
 
@@ -160,12 +177,12 @@ public class P2 {
         // Create a JPanel to hold the JTable and the button
         JPanel panel = new JPanel();
         panel.add(table);
-        JButton button = new JButton("Button");
+        JButton button = new JButton("Download CSV");
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    writeCsv(sizes, avgCounts, avgTimes, countCoef, timeCoef, null);
+                    writeCsv(sizes, avgCounts, avgTimes, countCoef, timeCoef, filename);
                 } catch (IOException e1) {
                     // TODO Auto-generated catch block
                     e1.printStackTrace();
@@ -174,7 +191,7 @@ public class P2 {
         });
         panel.add(button);
         // Create the JOptionPane and display it
-        JOptionPane.showMessageDialog(null, panel, "Merge Results", JOptionPane.PLAIN_MESSAGE);
+        JOptionPane.showMessageDialog(null, panel, title, JOptionPane.PLAIN_MESSAGE);
 
     }
 
@@ -182,7 +199,7 @@ public class P2 {
     private static double[] calcDiffCoef(int[] avgCounts, int[][] counts) {
         int n = avgCounts.length;
         double[] diffCoef = new double[n];
-    
+
         for (int i = 0; i < n; i++) {
             int sum = 0;
             for (int j = 0; j < counts[i].length; j++) {
@@ -197,14 +214,26 @@ public class P2 {
             double stddev = Math.sqrt(variance);
             diffCoef[i] = stddev / avgCounts[i] * 100;
         }
-    
+
         return diffCoef;
     }
-    
 
-    public static void writeCsv(ArrayList<Integer> sizes, int[] avgCounts, int[] avgTimes, double[] countCoef,
-            double[] timeCoef, String filename) throws IOException {
-        FileWriter csvWriter = new FileWriter("p2output/mergeResultsFinal.csv");
+    public static void writeCsv(ArrayList<Integer> sizes, int[] avgCounts, int[] avgTimes, double[] countCoef, double[] timeCoef, String filename) throws IOException {
+        System.out.println(filename);
+        String name = "";
+        switch (filename) {
+            case "mergeResults.txt":
+                name = "p2output/mergeResultsFinal.csv";
+                break;
+            case "selectionResults.txt":
+                name = "p2output/selectionResultsFinal.csv";
+                break;
+            default:
+                name = "";
+                break;
+        }
+
+        FileWriter csvWriter = new FileWriter(name);
         csvWriter.append("Size");
         csvWriter.append(",");
         csvWriter.append("Avg Count");

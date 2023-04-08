@@ -55,6 +55,7 @@ class Merge {
         // System.out.println("count" + Arrays.toString(critCount[0]) + "\n");
         // System.out.println("time"+Arrays.toString(elapsedTime[0])+"\n");
         printResults(critCount, elapsedTime, dataSet);
+        System.out.println("Merge complete.\n");
     }
 
     static void printResults(long[][] critCount, long[][] elapsedTime, int[][][] dataSet) {

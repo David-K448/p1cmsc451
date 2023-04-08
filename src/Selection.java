@@ -1,7 +1,10 @@
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Random;
 
 class Selection {
-    private int[][][] dataSet;
+    private static int[][][] dataSet;
     private static long endTime = 0; 
 
     public Selection(int[][][] dataSet) {
@@ -17,6 +20,65 @@ class Selection {
             selectionSort(warmUpData);
         }
         warmup();
+
+        long[][] critCount = new long[12][40]; // count of each of the 40 runs
+        long[][] elapsedTime = new long[12][40]; // elapsed time of each of the 40 runs
+        int[] countArrAvg = new int[12]; // avg count for each of 12 groups
+        long[] timeAvg = new long[12];
+
+        for (int i = 0; i < 12; i++) {
+            int countPass = 0;
+            int countTime = 0;
+            for (int j = 0; j < 40; j++) {
+                int[] arr = dataSet[i][j];
+
+                long startTime = System.nanoTime(); // start time
+                int tempCount = selectionSort(arr); // call sort // performance call
+                long tempTimeCalc = endSort(startTime, endTime); // get temp elapsed time
+
+                countPass += tempCount;
+                critCount[i][j] = tempCount;
+
+                countTime += tempTimeCalc;
+                elapsedTime[i][j] = tempTimeCalc;
+            }
+            countArrAvg[i] = countPass / 40;
+            timeAvg[i] = countTime / 40;
+        }
+
+        printResults(critCount, elapsedTime, dataSet);
+        System.out.println("Selection complete.\n");
+    }
+
+    static void printResults(long[][] critCount, long[][] elapsedTime, int[][][] dataSet) {
+        try {
+            FileWriter fw = new FileWriter("p1output/selectionResults.txt");
+            BufferedWriter bw = new BufferedWriter(fw);
+
+            for (int i = 0; i < 12; i++) {
+                StringBuilder str = new StringBuilder();
+                Integer x = dataSet[i][0].length;
+                str.append(x + " ");
+                for (int j = 0; j < 40; j++) {
+                    Long c = critCount[i][j];
+                    str.append(c + " ");
+                    long t = elapsedTime[i][j];
+                    str.append(t + " ");
+                }
+                bw.write(str.toString() + "\n");
+                // System.out.println(str.toString());
+            }
+
+            bw.close();
+            fw.close();
+        } catch (IOException e) {
+            System.out.println("An error occurred while writing to file.");
+            e.printStackTrace();
+        }
+    }
+
+    private static long endSort(long startTime, long endTime) {
+        return (endTime - startTime);
     }
 
     /*
@@ -37,6 +99,7 @@ class Selection {
             array[minIndex] = array[i];
             array[i] = temp;
         }
+        endTime = System.nanoTime();
         return passes;
     }
 
