@@ -9,18 +9,18 @@ class Selection {
 
     public Selection(int[][][] dataSet) {
         this.dataSet = dataSet;
-    }
-
-    public static void startSort() {
-        System.out.println("Selection called");
         // warms up the sorting method, I saw an enourmous drop in variance after doing
         // this
+        System.out.println("Selection Warmup Started");
         int[] warmUpData = new int[] { 10, 9, 8, 7, 6, 5, 4, 3, 2 };
         for (int k = 0; k < 75000; k++) {
             selectionSort(warmUpData);
         }
         warmup();
+    }
 
+    public static void startSort() {
+        System.out.println("Selection Started");
         long[][] critCount = new long[12][40]; // count of each of the 40 runs
         long[][] elapsedTime = new long[12][40]; // elapsed time of each of the 40 runs
         int[] countArrAvg = new int[12]; // avg count for each of 12 groups

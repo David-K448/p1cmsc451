@@ -6,16 +6,16 @@ import java.util.Random;
 public class P1 {
 
     public static void main(String[] args) throws Exception {
-        int[] sizeArray = new int[] { 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200 };
+        // int[] sizeArray = new int[] { 200, 400, 600, 800, 1000, 1200, 1400, 1600, 1800, 2000, 2200, 2400 }; <-- base array for sizes fo data structures to be built 
 
-        int[][][] dataSet = new int[12][40][]; // initialize data set
+        int[][][] dataSet = new int[12][40][]; // initialize 3d data structure 
 
-        fillDataStructure(dataSet); // create data structure for use in both sorting algos
+        fillDataStructure(dataSet); // create data structure for use in both sorting algos, rand values
 
-        Merge merge = new Merge(dataSet); // call merge class
+        Merge merge = new Merge(dataSet); // call merge class, also calls warmup method to 'warmup' the merge sort class
         merge.startSort();
 
-        Selection selection = new Selection(dataSet); // call selection class
+        Selection selection = new Selection(dataSet); // call selection class, also calls warmup method to 'warmup' the selection sort class
         selection.startSort();
       
     }
