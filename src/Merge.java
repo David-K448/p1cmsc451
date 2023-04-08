@@ -18,7 +18,7 @@ class Merge {
         // warms up the sorting method, I saw an enourmous drop in variance after doing
         // this
         int[] warmUpData = new int[] { 10, 9, 8, 7, 6, 5, 4, 3, 2 };
-        for (int k = 0; k < 10; k++) {
+        for (int k = 0; k < 75000; k++) {
             mergeSort(warmUpData);
         }
         warmup();

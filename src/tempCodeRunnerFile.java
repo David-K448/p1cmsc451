@@ -1,4 +1,2 @@
-String title = "";
-        // switch(title) {
-        //     case "mer";
-        // }
+ // Merge merge = new Merge(dataSet); // call merge class
+        // merge.startSort();
