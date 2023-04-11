@@ -205,6 +205,14 @@ public class P2 {
                 break;
         }
 
+        File dir = new File("p2output");
+        if (!dir.exists()) {
+            boolean created = dir.mkdir();
+            if (!created) {
+                throw new IOException("Failed to create directory 'p2output'");
+            }
+        }
+
         FileWriter csvWriter = new FileWriter(name);
         csvWriter.append("Size");
         csvWriter.append(",");

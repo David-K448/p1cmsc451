@@ -1,4 +1,5 @@
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Random;
@@ -52,9 +53,16 @@ class Selection {
 
     static void printResults(long[][] critCount, long[][] elapsedTime, int[][][] dataSet) {
         try {
+            File dir = new File("p1output");
+            if (!dir.exists()) {
+                boolean created = dir.mkdir();
+                if (!created) {
+                    throw new IOException("Failed to create directory 'p1output'");
+                }
+            }
             FileWriter fw = new FileWriter("p1output/selectionResults.txt");
             BufferedWriter bw = new BufferedWriter(fw);
-
+    
             for (int i = 0; i < 12; i++) {
                 StringBuilder str = new StringBuilder();
                 Integer x = dataSet[i][0].length;
@@ -68,7 +76,7 @@ class Selection {
                 bw.write(str.toString() + "\n");
                 // System.out.println(str.toString());
             }
-
+    
             bw.close();
             fw.close();
         } catch (IOException e) {
@@ -76,6 +84,7 @@ class Selection {
             e.printStackTrace();
         }
     }
+    
 
     private static long endSort(long startTime, long endTime) {
         return (endTime - startTime);
