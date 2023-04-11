@@ -12,10 +12,10 @@ class Merge {
     public Merge(int[][][] dataSet) {
         this.dataSet = dataSet;
         System.out.println("merge warmup started");
-        int[] warmUpData = new int[] { 10, 9, 8, 7, 6, 5, 4, 3, 2 };
-        for (int k = 0; k < 75000; k++) {
-            mergeSort(warmUpData);
-        }
+        // int[] warmUpData = new int[] { 10, 9, 8, 7, 6, 5, 4, 3, 2 };
+        // for (int k = 0; k < 75000; k++) {
+        //     mergeSort(warmUpData);
+        // }
         warmup();
     }
 

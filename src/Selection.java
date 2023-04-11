@@ -12,10 +12,10 @@ class Selection {
         // warms up the sorting method, I saw an enourmous drop in variance after doing
         // this
         System.out.println("Selection Warmup Started");
-        int[] warmUpData = new int[] { 10, 9, 8, 7, 6, 5, 4, 3, 2 };
-        for (int k = 0; k < 75000; k++) {
-            selectionSort(warmUpData);
-        }
+        // int[] warmUpData = new int[] { 10, 9, 8, 7, 6, 5, 4, 3, 2 };
+        // for (int k = 0; k < 10000; k++) {
+        //     selectionSort(warmUpData);
+        // }
         warmup();
     }
 
@@ -112,13 +112,13 @@ class Selection {
             }
         }
 
-        long teststartTime = System.nanoTime();
+        long startTime = System.nanoTime();
         for (int i = 0; i < 100; i++) {
             for (int j = 0; j < 10; j++) {
-                Selection.selectionSort(testData[j]);
+                Merge.mergeSort(testData[j]);
             }
         }
-        long testendTime = System.nanoTime();
-        System.out.println("Warmup complete in " + (testendTime - teststartTime) / 1000000 + " ms");
+        long endTime = System.nanoTime();
+        System.out.println("Warmup complete in " + (endTime - startTime) / 1000000 + " ms");
     }
 }
