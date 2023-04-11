@@ -1,3 +1,8 @@
+/*
+ * David Killian
+ * CMSC 451 P1
+ */
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

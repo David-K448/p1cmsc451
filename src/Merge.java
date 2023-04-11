@@ -1,3 +1,8 @@
+/*
+ * David Killian
+ * CMSC 451 P1
+ */
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
