@@ -10,13 +10,18 @@
  import java.util.Arrays;
  import java.util.Collections;
  import java.util.Random;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
  
  class Selection {
      private static int[][][] dataSet;
      private static long endTime = 0;
+     private static Random rand;
  
-     public Selection(int[][][] dataSet) {
+     public Selection(int[][][] dataSet, Random rand) {
          this.dataSet = dataSet;
+         this.rand = rand;
          // warms up the sorting method, I saw an enourmous drop in variance after doing
          // this
          System.out.println("Selection Warmup Started");
@@ -118,7 +123,6 @@
      public static void warmup() {
          // Initialize test data
          int[][][] testData = new int[12][40][];
-         Random rand = new Random();
          for (int i = 0; i < testData.length; i++) {
              int size = (i + 1) * 200;
              for (int j = 0; j < testData[i].length; j++) {
@@ -149,6 +153,5 @@
          long endTime = System.nanoTime();
          System.out.println("Warmup complete in " + (endTime - startTime) / 1000000 + " ms");
      }
- 
  }
  

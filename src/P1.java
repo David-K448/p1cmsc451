@@ -9,6 +9,7 @@
  import java.util.Random;
  
  public class P1 {
+    private static Random rand = new Random(123456789);
  
      public static void main(String[] args) throws Exception {
          // int[] sizeArray = new int[] { 200, 400, 600, 800, 1000, 1200, 1400, 1600,
@@ -28,10 +29,10 @@
              }
          }
  
-         Merge merge = new Merge(dataSet); // call merge class, also calls warmup method to 'warmup' the merge sort class
+         Merge merge = new Merge(dataSet, rand); // call merge class, also calls warmup method to 'warmup' the merge sort class
          merge.startSort();
  
-         Selection selection = new Selection(dataSet); // call selection class, also calls warmup method to 'warmup' the
+         Selection selection = new Selection(dataSet, rand); // call selection class, also calls warmup method to 'warmup' the
                                                  
          selection.startSort();
  
@@ -44,7 +45,6 @@
      // using the Fisher-Yates shuffle algorithm to shuffle array randomly after
      // initialization
      public static void fillDataStructure(int[][][] dataSet) {
-         Random rand = new Random();
  
          for (int i = 0; i < 12; i++) {
              int size = (i + 1) * 200;
