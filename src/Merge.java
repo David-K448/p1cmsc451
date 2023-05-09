@@ -30,11 +30,12 @@ class Merge {
     public Merge(int[][][] dataSet, Random rand) {
         this.dataSet = dataSet;
         this.rand = rand;
-        System.out.println("merge warmup started");
-        warmup();
+        
     }
 
     public static void startSort() {
+        System.out.println("merge warmup started");
+        warmup();
         System.out.println("merge called");
         long[][] critCount = new long[12][40]; // count of each of the 40 runs
         long[][] elapsedTime = new long[12][40]; // elapsed time of each of the 40runs
